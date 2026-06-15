@@ -46,7 +46,7 @@ def move():
 
     # check for collisions
     if new_head in snake or new_head[0] < - WIDTH / 2 or new_head[0] > WIDTH / 2 or new_head[1] < - HEIGHT / 2 or new_head[1] > HEIGHT / 2:
-        turtle.bye()
+        reset()
     else:
         snake.append(new_head)
 
@@ -58,6 +58,7 @@ def move():
             stamper.goto(segment[0], segment[1])
             stamper.stamp()
 
+        screen.title(f'Snake Game.  Score: {score}')
         screen.update()
 
         turtle.ontimer(move, DELAY)
@@ -73,12 +74,23 @@ def get_random_food_position():
     return (x, y)
 
 def food_collision():
-    global food_position
+    global food_position, score
     if get_distance(snake[-1], food_position) < 20:
+        score += 1
         food_position = get_random_food_position()
         food.goto(food_position)
         return True
     return False
+
+def reset():
+    global score, snake, snake_direction, food_position
+    score = 0
+    snake = [[0, 0], [20, 0], [40, 0], [60, 0]]
+    snake_direction = "up"
+    food_position = get_random_food_position()
+    food.goto(food_position)
+    move()
+
 
 # screen 
 screen = turtle.Screen()
@@ -102,6 +114,7 @@ stamper.penup()
 # snake
 snake = [[0, 0], [20, 0], [40, 0], [60, 0]]
 snake_direction = "up"
+score = 0
 
 # draw snake
 for segment in snake:
@@ -117,7 +130,7 @@ food_position = get_random_food_position()
 food.goto(food_position)
 
 # set animation
-move()
+reset()
 
 # finish game
 turtle.done()
