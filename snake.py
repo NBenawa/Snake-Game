@@ -96,7 +96,9 @@ def reset():
 screen = turtle.Screen()
 screen.setup(WIDTH, HEIGHT)
 screen.title("Snake Game")
-screen.bgcolor("cyan")
+screen.bgpic("images/bg.gif")
+screen.register_shape("images/head.gif")
+screen.register_shape("images/food.gif")
 screen.tracer(0)
 
 # key controlling
@@ -124,7 +126,7 @@ for segment in snake:
 
 # food
 food = turtle.Turtle()
-food.shape("circle")
+food.shape("images/food.gif")
 food.shapesize(FOOD_SIZE/20)
 food.penup()
 food_position = get_random_food_position()
