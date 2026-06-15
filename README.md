@@ -63,7 +63,6 @@ python snake.py
 | ↓   | Move Down  |
 | ←   | Move Left  |
 | →   | Move Right |
-| ESC | Exit Game  |
 
 ## 🏆 Scoring
 
@@ -75,13 +74,18 @@ python snake.py
   * Its own body
 
 ## 📂 Project Structure
-
-...
+├── images/
+│ ├── bg.gif 
+│ ├── head.gif 
+│ └── food.gif 
+├── .gitignore 
+├── README.md 
+└── snake.py
 
 ## 🛠 Built With
 
 * Python
-* Pygame
+* Turtle
 
 ## 📚 Learning Objectives
 
@@ -92,19 +96,6 @@ This project demonstrates:
 * Collision detection
 * Object movement
 * Basic game development concepts using Python
-
-## 🤝 Contributing
-
-Contributions are welcome!
-
-1. Fork the repository
-2. Create a new branch
-3. Make your changes
-4. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License. Feel free to use, modify, and distribute it.
 
 ## ⭐ Support
 
