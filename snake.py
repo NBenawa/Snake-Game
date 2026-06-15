@@ -2,9 +2,9 @@ import turtle
 import random
 
 # dimensions
-WIDTH = 500
-HEIGHT = 500
-DELAY = 400
+WIDTH = 800
+HEIGHT = 600
+DELAY = 200
 FOOD_SIZE = 10
 
 offsets = {
@@ -97,6 +97,7 @@ screen = turtle.Screen()
 screen.setup(WIDTH, HEIGHT)
 screen.title("Snake Game")
 screen.bgcolor("cyan")
+screen.tracer(0)
 
 # key controlling
 screen.listen()
