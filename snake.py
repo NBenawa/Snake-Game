@@ -6,13 +6,25 @@ WIDTH = 800
 HEIGHT = 600
 DELAY = 200
 FOOD_SIZE = 10
+SNAKE_SIZE = 20
+
 
 offsets = {
-    "up": (0, 20),
-    "down": (0, -20),
-    "left": (-20, 0),
-    "right": (20, 0)
+    "up": (0, SNAKE_SIZE),
+    "down": (0, -SNAKE_SIZE),
+    "left": (-SNAKE_SIZE, 0),
+    "right": (SNAKE_SIZE, 0)
 }
+
+# high score
+high_score = 0
+
+# load high score
+try:
+    with open("high_score.txt", "r") as file:
+        high_score = int(file.read())
+except FileNotFoundError:
+    pass
 
 # movements
 def go_up():
@@ -35,6 +47,14 @@ def go_left():
     if snake_direction != "right":
         snake_direction = "left"
 
+# update high score
+def update_high_score():
+    global high_score
+    if (score > high_score):
+        high_score = score
+        with open("high_score.txt", "w") as file:
+            file.write(str(high_score))
+
 # move snake
 def move():
     # remove existing stamps
@@ -54,11 +74,17 @@ def move():
         if not food_collision(): 
             snake.pop(0)
 
-        for segment in snake:
+        # draw snake
+        stamper.shape("images/head.gif")
+        stamper.goto(snake[-1][0], snake[-1][1])
+        stamper.stamp()
+        stamper.shape("circle")
+
+        for segment in snake[:-1]:
             stamper.goto(segment[0], segment[1])
             stamper.stamp()
 
-        screen.title(f'Snake Game.  Score: {score}')
+        screen.title(f'Snake Game.  Score: {score} , High Score: {high_score}')
         screen.update()
 
         turtle.ontimer(move, DELAY)
@@ -77,6 +103,7 @@ def food_collision():
     global food_position, score
     if get_distance(snake[-1], food_position) < 20:
         score += 1
+        update_high_score()
         food_position = get_random_food_position()
         food.goto(food_position)
         return True
@@ -85,7 +112,7 @@ def food_collision():
 def reset():
     global score, snake, snake_direction, food_position
     score = 0
-    snake = [[0, 0], [20, 0], [40, 0], [60, 0]]
+    snake = [[0, 0], [SNAKE_SIZE, 0], [SNAKE_SIZE*2, 0], [SNAKE_SIZE*3, 0]]
     snake_direction = "up"
     food_position = get_random_food_position()
     food.goto(food_position)
@@ -111,7 +138,7 @@ screen.onkey(go_left, "Left")
 # stamper
 stamper = turtle.Turtle()
 stamper.shape("circle")
-stamper.color("red")
+stamper.color("#009ef1")
 stamper.penup()
 
 # snake
