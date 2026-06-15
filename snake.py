@@ -42,16 +42,20 @@ def move():
     new_head[0] += offsets[snake_direction][0]
     new_head[1] += offsets[snake_direction][1]
 
-    snake.append(new_head)
-    snake.pop(0)
+    # check for collisions
+    if new_head in snake or new_head[0] < - WIDTH / 2 or new_head[0] > WIDTH / 2 or new_head[1] < - HEIGHT / 2 or new_head[1] > HEIGHT / 2:
+        turtle.bye()
+    else:
+        snake.append(new_head)
+        snake.pop(0)
 
-    for segment in snake:
-        stamper.goto(segment[0], segment[1])
-        stamper.stamp()
+        for segment in snake:
+            stamper.goto(segment[0], segment[1])
+            stamper.stamp()
 
-    screen.update()
+        screen.update()
 
-    turtle.ontimer(move, DELAY)
+        turtle.ontimer(move, DELAY)
 
 
 # screen 
