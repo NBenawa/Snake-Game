@@ -1,9 +1,11 @@
 import turtle
+import random
 
 # dimensions
 WIDTH = 500
 HEIGHT = 500
 DELAY = 400
+FOOD_SIZE = 10
 
 offsets = {
     "up": (0, 20),
@@ -47,7 +49,10 @@ def move():
         turtle.bye()
     else:
         snake.append(new_head)
-        snake.pop(0)
+
+        # checking food collision
+        if not food_collision(): 
+            snake.pop(0)
 
         for segment in snake:
             stamper.goto(segment[0], segment[1])
@@ -61,6 +66,19 @@ def get_distance(pos1, pos2):
     x1, y1 = pos1
     x2, y2 = pos2
     return ((y1-y2) ** 2 + (x1-x2) ** 2) ** 0.5
+
+def get_random_food_position():
+    x = random.randrange(-WIDTH // 2 + FOOD_SIZE, WIDTH // 2 - FOOD_SIZE)
+    y = random.randrange(-HEIGHT // 2 + FOOD_SIZE, HEIGHT // 2 - FOOD_SIZE)
+    return (x, y)
+
+def food_collision():
+    global food_position
+    if get_distance(snake[-1], food_position) < 20:
+        food_position = get_random_food_position()
+        food.goto(food_position)
+        return True
+    return False
 
 # screen 
 screen = turtle.Screen()
@@ -89,6 +107,14 @@ snake_direction = "up"
 for segment in snake:
     stamper.goto(segment[0], segment[1])
     stamper.stamp()
+
+# food
+food = turtle.Turtle()
+food.shape("circle")
+food.shapesize(FOOD_SIZE/20)
+food.penup()
+food_position = get_random_food_position()
+food.goto(food_position)
 
 # set animation
 move()
